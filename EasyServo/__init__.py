@@ -119,8 +119,8 @@ class EasyservoPlugin(octoprint.plugin.SettingsPlugin,
 				return
 			GPIOX = self._settings.get_int(["GPIOX"])
 			GPIOY = self._settings.get_int(["GPIOY"])
-			self.pi.set_servo_pulsewidth(GPIOX, self.angle_to_width(xAutoAngle))
-			self.pi.set_servo_pulsewidth(GPIOY, self.angle_to_width(yAutoAngle))
+			self.move_servo_to_ang(GPIOX, xAutoAngle)
+			self.move_servo_to_ang(GPIOY, yAutoAngle)
 			"""self._settings.set(["currentX"], xAutoAngle)
 			self._settings.set(["currentY"], yAutoAngle)
 			self._settings.save()"""
