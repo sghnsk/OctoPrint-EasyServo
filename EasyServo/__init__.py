@@ -121,6 +121,9 @@ class EasyservoPlugin(octoprint.plugin.SettingsPlugin,
 			GPIOY = self._settings.get_int(["GPIOY"])
 			self.pi.set_servo_pulsewidth(GPIOX, self.angle_to_width(xAutoAngle))
 			self.pi.set_servo_pulsewidth(GPIOY, self.angle_to_width(yAutoAngle))
+			# Move to auto home
+			self.move_servo_to_ang(GPIOX, xAutoAngle)
+			self.move_servo_to_ang(GPIOY, yAutoAngle)
 			"""self._settings.set(["currentX"], xAutoAngle)
 			self._settings.set(["currentY"], yAutoAngle)
 			self._settings.save()"""
@@ -214,7 +217,7 @@ class EasyservoPlugin(octoprint.plugin.SettingsPlugin,
 		else:
 			incrementSign = -1
 
-		for x in range(actual_width+1, width_to_reach+1, incrementSign):
+		for x in range(actual_width, width_to_reach, incrementSign):
 			self.pi.set_servo_pulsewidth(int(pin), x)
 			#self._logger.info("Setting the width of the pin {} at {} us".format(int(pin), x))
 			time.sleep(sleepTime / 1000)
@@ -317,7 +320,7 @@ class EasyservoPlugin(octoprint.plugin.SettingsPlugin,
 		else:
 			incrementSign = -1
 
-		for x in range(actual_width+1, width_to_reach+1, incrementSign):
+		for x in range(actual_width, width_to_reach, incrementSign):
 			width_current = self.pi.get_servo_pulsewidth(int(pin))
 			if width_current > self.angle_to_width(maxAngle):  # Noticed that the angle was 180.0° for 2479us and 500 was giving strange values .......
 				self._logger.info("GPIO {} reached his boundaries with a {} pulse width".format(pin, width_current))
