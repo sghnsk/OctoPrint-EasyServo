@@ -28,7 +28,7 @@ $(function () {
         let boolBound = false
         
         self.onBeforeBinding = function () {
-            $("#control-easy-servo-wrapper").insertAfter("#control-jog-custom");
+            $("#control-easy-servo-wrapper").insertBefore("#control-jog-custom");
             self.plugin_settings = self.settingsViewModel.settings.plugins.EasyServo;
             self.chosenOption(self.plugin_settings.chosenOption());
             self.point1(self.plugin_settings.point1());
